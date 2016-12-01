@@ -48,10 +48,10 @@ get "/login/:user" do
 end 
 
 
-# check for token = 2JWqGx57O5oZXPCye5cOX4kz
+# check for token = V38x8M9GYU8BhKhE64WhidX7
 
 # Params I'll receive
-# token=2JWqGx57O5oZXPCye5cOX4kz
+# token=V38x8M9GYU8BhKhE64WhidX7
 # team_id=T0001
 # team_domain=example
 # channel_id=C2147483705
@@ -67,7 +67,7 @@ post "/handle_echo_slash_cmd/" do
   puts params.to_s
 
   # this should be in a .env
-  slack_token = "2JWqGx57O5oZXPCye5cOX4kz"
+  slack_token = "V38x8M9GYU8BhKhE64WhidX7"
 
   # check it's valid
   if slack_token == params[:token]
