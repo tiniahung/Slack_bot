@@ -33,7 +33,11 @@ get "/" do
   401
 end
 
-
+=begin
+post "/service/:team/:user/:channel" do
+  param[:text]
+end
+=end
 
 get "/login/:user" do 
   
