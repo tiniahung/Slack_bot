@@ -20,8 +20,8 @@ end
 # require any models 
 # you add to the folder
 # using the following syntax:
-#require_relative './models/user'
-#require_relative './models/task'
+require_relative './models/user'
+require_relative './models/task'
 
 # enable sessions for this project
 enable :sessions
