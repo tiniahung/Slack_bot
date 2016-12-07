@@ -97,7 +97,7 @@ post "/handle_echo_slash_cmd/" do
     
   else
     content_type :json
-    {text: "Invalid Request", response_type: "ephemeral" }.to_json
+    {text: "Invalid Request", response_type: "in_channel" }.to_json
 
   end
 
