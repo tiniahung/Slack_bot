@@ -4,6 +4,7 @@ require 'sinatra/activerecord'
 require 'rake'
 require 'slack-ruby-client'
 require 'httparty'
+require 'rspotify'
 # ----------------------------------------------------------------------
 
 # Load environment variables using Dotenv. If a .env file exists, it will
@@ -21,6 +22,7 @@ end
 # using the following syntax:
 require_relative './models/user'
 require_relative './models/task'
+#require_relative './models/playlist'
 
 # enable sessions for this project
 enable :sessions
@@ -93,6 +95,38 @@ post "/handle_echo_slash_cmd/" do
     {text: formatted_message, response_type: "in_channel" }.to_json
     
     
+  else
+    content_type :json
+    {text: "Invalid Request", response_type: "ephemeral" }.to_json
+
+  end
+
+end
+
+
+post "/dj_slash_cmd/" do
+
+  puts params.to_s
+
+  slack_token = "oBz6gSn6Uh1J6F2oV5u6yrCP"
+
+  if slack_token == params[:token]
+    
+    channel_name = params[:channel_name]
+    user_name = params[:user_name]
+    text = params[:text]
+    response_url = params[:response_url]
+
+    
+    greeting = ["Hey dude!", "Hey man!", "Hey brother!", "It's great to see you bro!"]
+    
+    random = Dj.all.sample(1).first
+    formatted_message = greeting.sample + " Here's your new playlist!\n\n" + Rspotify(random.name).underline + "\n" + random.playlist
+
+    content_type :json
+  
+    {text: formatted_message, response_type: "in_channel" }.to_json
+
   else
     content_type :json
     {text: "Invalid Request", response_type: "ephemeral" }.to_json

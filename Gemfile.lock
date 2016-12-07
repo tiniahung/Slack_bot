@@ -107,6 +107,7 @@ PLATFORMS
 
 DEPENDENCIES
   activerecord
+  activesupport
   certified
   dotenv
   httparty
