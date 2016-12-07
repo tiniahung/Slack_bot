@@ -4,7 +4,6 @@ require 'sinatra/activerecord'
 require 'rake'
 require 'slack-ruby-client'
 require 'httparty'
-require 'rspotify'
 # ----------------------------------------------------------------------
 
 # Load environment variables using Dotenv. If a .env file exists, it will
@@ -34,17 +33,17 @@ get "/" do
   401
 end
 
-=begin
-post "/service/:team/:user/:channel" do
-  param[:text]
-end
-=end
+#=begin
+#post "/service/:team/:user/:channel" do
+#  param[:text]
+#end
+#=end
 
 get "/login/:user" do 
   
-  #send_slack_request "Good news\n #{params[:user]} just signed into the app." 
+  send_slack_request "Good news\n #{params[:user]} just signed into the app." 
   
-  send_slack_request "Good news\n #{params[:user]} just signed into the app.", ["https://github.com/daraghbyrne"]
+  #send_slack_request "Good news\n #{params[:user]} just signed into the app.", ["https://github.com/daraghbyrne"]
   
 end 
 
@@ -63,7 +62,6 @@ end
 # text=94070
 # response_url=https://hooks.slack.com/commands/1234/5678
 
-# make help as an slack command
 post "/handle_echo_slash_cmd/" do
 
   puts params.to_s
@@ -133,28 +131,26 @@ private
 # for example 
 def send_slack_request message
 
-	puts "trying slack webhook"
-
   slack_webhook = "https://hooks.slack.com/services/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"
   
-  puts HTTParty.post slack_webhook, body: { text: message.to_s, username: "AppBot", channel: "#jukebox"}.to_json, headers: {'content-type' => 'application/json'}
-
-  "Sent #{message}"
-  
-end
-
-
-def send_slack_request message, links
-
-  slack_webhook = "https://hooks.slack.com/services/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"
-  
-  formatted_message = message.to_s + "\n"
-  links.each do |link|
-    formatted_message += "<#{link.to_s}>".to_s
-  end
-  
-  HTTParty.post slack_webhook, body: {text: formatted_message.to_s, username: "AppBot", channel: "bots"}.to_json, headers: {'content-type' => 'application/json'}
+  HTTParty.post slack_webhook, body: { text: message.to_s, username: "AppBot", channel: "jukebox"}.to_json, headers: {'content-type' => 'application/json'}
 
   response
   
 end
+
+
+#def send_slack_request message, links
+#
+#  slack_webhook = "https://hooks.slack.com/services/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"
+#  
+#  formatted_message = message.to_s + "\n"
+#  links.each do |link|
+#    formatted_message += "<#{link.to_s}>".to_s
+#  end
+#  
+#  HTTParty.post slack_webhook, body: {text: formatted_message.to_s, username: "AppBot", channel: "bots"}.to_json, headers: {'content-type' => 'application/json'}
+#
+#  response
+#  
+#end
