@@ -4,6 +4,7 @@ require 'sinatra/activerecord'
 require 'rake'
 require 'slack-ruby-client'
 require 'httparty'
+require 'rspotify'
 # ----------------------------------------------------------------------
 
 # Load environment variables using Dotenv. If a .env file exists, it will
@@ -19,8 +20,8 @@ end
 # require any models 
 # you add to the folder
 # using the following syntax:
-require_relative './models/user'
-require_relative './models/task'
+#require_relative './models/user'
+#require_relative './models/task'
 
 # enable sessions for this project
 enable :sessions
@@ -62,6 +63,7 @@ end
 # text=94070
 # response_url=https://hooks.slack.com/commands/1234/5678
 
+# make help as an slack command
 post "/handle_echo_slash_cmd/" do
 
   puts params.to_s
@@ -90,7 +92,7 @@ post "/handle_echo_slash_cmd/" do
 
     # Setting response_type to ephemeral is the same as not including the response type at all, and the response message will be visible only to the user that issued the command. For the best clarity of intent, we recommend always declaring your intended response_type.
 
-    {text: formatted_message, response_type: "in_channel" }.to_json
+    {text: formatted_message, response_type: "ephemeral" }.to_json
     
     
   else
@@ -131,11 +133,13 @@ private
 # for example 
 def send_slack_request message
 
+	puts "trying slack webhook"
+
   slack_webhook = "https://hooks.slack.com/services/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"
   
-  HTTParty.post slack_webhook, body: { text: message.to_s, username: "AppBot", channel: "bots"}.to_json, headers: {'content-type' => 'application/json'}
+  puts HTTParty.post slack_webhook, body: { text: message.to_s, username: "AppBot", channel: "#jukebox"}.to_json, headers: {'content-type' => 'application/json'}
 
-  response
+  "Sent #{message}"
   
 end
 

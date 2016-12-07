@@ -16,8 +16,11 @@ gem 'httparty'
 group :development, :test do
   gem 'sqlite3'
   gem 'dotenv'
+  gem 'certified'
+  gem 'rspotify'
 end
 
 group :production, :staging do
   gem 'pg'
 end
+
