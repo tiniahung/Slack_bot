@@ -92,7 +92,7 @@ post "/handle_echo_slash_cmd/" do
 
     # Setting response_type to ephemeral is the same as not including the response type at all, and the response message will be visible only to the user that issued the command. For the best clarity of intent, we recommend always declaring your intended response_type.
 
-    {text: formatted_message, response_type: "ephemeral" }.to_json
+    {text: formatted_message, response_type: "in_channel" }.to_json
     
     
   else
